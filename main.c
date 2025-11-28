@@ -125,3 +125,97 @@ void cancelSlot(){
     
     printf("Appointmentt removed.\n");
 }
+
+typedef struct{
+int id;
+char name[64];
+char symptoms[120];
+int priority;
+time_t arrivalTime;
+}Walkin;
+
+Walkin *pq = NULL;
+int pqSize = 0;
+
+void swapWalkin(Walkin *a,Walkin *b)
+{
+    Walkin temp;
+*a=*b;
+*b=temp;
+}
+
+void pushWalkin(const char *name,const char *sym,int pr)
+{
+    pq = realloc(pq,sizeof(Walkin)*(pqSize+1));
+Walkin *w =&pq[pqSize];
+w->id=rand()%900 + 100;
+strcpy(w->name,name);
+strcpy(w->symptoms,sym);
+w->priority =pr;
+w->arrivalTime = time(NULL);
+
+//simple min-heap bubble-up
+int idx =pqSize;
+while(idx>0)
+{
+int parent =(idx-1)/2;
+if(pq[parent].priority<=pq[idx].priority)
+    break;
+swapWalkin(&pq[parent],&pq[idx]);
+idx = parent;
+}
+
+pqSize++;
+printf("Walk-ins registered.\n");
+}
+
+void serveWalkin()
+{
+    if(pqSize==0){
+printf("No Walk-ins present.\n");
+return;
+    }
+
+Walkin top=pq[0];
+
+pq[0] = pq[pqSize-1];
+pqSize--;
+pq = realloc(pq,sizeof(Walkin)*pqSize);
+
+int idx=0;
+while(1)
+{
+int left=2*idx+1,right=2*idx+2;
+int smallest =idx;
+
+if(left<pqSize && pq[left].priority<pq[smallest].priority)
+    smallest=left;
+if(right<pqSize && pq[right].priority<pq[smallest].priority)
+    smallest=right;
+if(smallest==idx)
+    break;
+
+swapWalkin(&pq[idx],&pq[smallest]);
+idx=smallest;
+}
+
+time_t now =time(NULL);
+double wait = difftime(now,top.arrivalTime);
+
+printf("\n--NOW SERVING WALK-IN--\n");
+printf("NAme:%s|ID:%d\n",top.name,top.id);
+printf("Wait Time : %0f sec\n",wait);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
