@@ -224,13 +224,57 @@ printf("\nDoctor;%s\n",d->name);
 printf("Total slots: %dd\n", d->capacity);
 printf("Book: %d | Free": %d\n", d->bookedCount,d-capacity-d->bookedCount);
 }
+printf("\n----Walked-in Queue----\n");
+if(pqSize==0)
+    printf("Pending Walk-ins: 0\n");
+else
+    printf("Pending Walk-ins: %d\n",pqSize);
 
+printf("\nAppointments Books:%d\n",totalBooked);
+printf("Appointments Cancelled%d\n",totalCancelled);
+}
+int main()
+{
+    srand(time(NULL));
 
+addDoctor(1, "Dr.Kunal","Heart Specialist",5);
+addDoctor(2, "Dr.Dhruv","Skin clinic",4);
+addDoctor(3,"Dr.Abhinav","General Medicine",6);
+int op;
+do{
+printf("\n======CLINIC CONTROL SYSYTEM=======\n");
+    printf("1.Book Appointment\n");
+ printf("1.Book Appointment\n");
+ printf("2.Cancelled Appointment\n");
+ printf("3.Register walk-in\n");
+ printf("4.Server Walk-in\n");
+ printf("5.view Doctors\n");
+ printf("6.Daily report\n");
+ printf("0.Exit\n");
+ printf("Choose\n");
 
+scanf("%d",&op);
+getchar();
 
-
-
-
+if(op==1) {bookSlot();recordBooked();}
+else if(op==2){cancelSlot();recordCancelled();}
+else if(op==3){
+char n[64],s[120];
+int p;
+printf("Name:");
+fgets(n,64,stdin);n[strcspn(n,"\n)]=0;
+printf("Symptoms:");
+fgets(s,120,stdin);s[strcspn(s,"\n)]=0;
+printf("priorty(1=High,2=Medium,3=Low):");
+pushWalkin(n,s,p);
+}
+else if(op==4) serveWalkIn();
+else if(op==5) listDoctors();
+else if(op==6)printfReport();
+}
+while(op!=0);
+return 0;
+}
 
 
 
