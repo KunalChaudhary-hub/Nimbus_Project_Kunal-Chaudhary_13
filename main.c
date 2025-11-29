@@ -221,7 +221,7 @@ for(int i=0;i<docCount;i++)
 {
 Doctor*d=&docList[i];
 printf("\nDoctor;%s\n",d->name);
-printf("Total slots: %d\n", d->capacity);
+printf("Total slots: %dd\n", d->capacity);
 printf("Book: %d | Free: %d\n", d->bookedCount, d->capacity - d->bookedCount);
 }
 printf("\n----Walked-in Queue----\n");
